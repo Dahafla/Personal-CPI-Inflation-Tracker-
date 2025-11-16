@@ -1,0 +1,10 @@
+pandas
+numpy
+SQLAlchemy
+python-dotenv
+requests
+statsmodels
+scikit-learn
+rapidfuzz
+matplotlib
+streamlit
