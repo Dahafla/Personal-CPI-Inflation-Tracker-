@@ -3,6 +3,17 @@ CREATE VIEW monthly_weights AS
 SELECT
 cc_num,
 strftime('%Y-%m', date) AS month,
+CASE
+    WHEN category = 'Groceries'
+      THEN 'Groceries'
+    WHEN category = 'Restaurants & Dining'
+      THEN 'Restaurants & Dining'
+    WHEN category IN ('Gas & Transport', 'Travel')
+      THEN 'Gas & Transport'
+    WHEN category = 'Health & Fitness'
+      THEN 'Health & Fitness'
+    ELSE 'Other'  -- Entertainment, Shopping, Home, Kids & Pets, Personal Care, Miscellaneous
+  END AS category,
 category,
 SUM(spend) AS spend,
 SUM(SUM(spend)) OVER (PARTITION BY cc_num, strftime('%Y-%m', date)) AS total_month, 
@@ -11,14 +22,14 @@ SUM(spend)*1.0 / SUM(SUM(spend)) OVER (PARTITION BY cc_num, strftime('%Y-%m', da
 FROM transactions
 GROUP BY cc_num, month, category;
 
--- 3.2 Base month per user
+--Base month per user
 DROP VIEW IF EXISTS base_month;
 CREATE VIEW base_month AS
 SELECT cc_num, MIN(month) AS month
 FROM monthly_weights
 GROUP BY cc_num;
 
--- 3.3 Base weights per user
+--Base weights per user
 DROP VIEW IF EXISTS base_weights;
 CREATE VIEW base_weights AS
 SELECT mw.cc_num, mw.category, mw.weight AS w0

@@ -5,7 +5,13 @@ from dotenv import load_dotenv
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 
 load_dotenv()
-engine = create_engine(os.getenv("DB_URL"))
+
+DB_URL = os.getenv("DB_URL")
+if not DB_URL:
+    raise SystemExit("❌ DB_URL is not set in .env")
+
+engine = create_engine(DB_URL)
+
 
 def forecast_all_users(steps=6):
     """
@@ -32,7 +38,7 @@ def forecast_all_users(steps=6):
     for cc_num, grp in df.groupby("cc_num"):
         s = grp.set_index("month")["personal_cpi"].sort_index()
 
-        # Force to monthly frequency
+        # Force to monthly frequency (Month Start)
         s = s.asfreq("MS")
 
         last_date = s.index.max()
@@ -57,7 +63,7 @@ def forecast_all_users(steps=6):
 
         # If too few points → skip SARIMAX, just use naive
         if len(s) < 6:
-            print(f"⚠️ Not enough data for cc_num={cc_num}, using naive forecast.")
+            print(f" Not enough data for cc_num={cc_num}, using naive forecast.")
             fc_df = naive_forecast()
             all_forecasts.append(fc_df)
             continue
@@ -78,7 +84,8 @@ def forecast_all_users(steps=6):
 
             # Convert index → 'month' column
             fc_df = fc_df.reset_index()
-            fc_df.rename(columns={"index": "month"}, inplace=True)
+            if "index" in fc_df.columns:
+                fc_df.rename(columns={"index": "month"}, inplace=True)
 
             fc_df["cc_num"] = cc_num
             fc_df.rename(
@@ -97,7 +104,6 @@ def forecast_all_users(steps=6):
             print(f"⚠️ Error forecasting cc_num={cc_num}, falling back to naive: {e}")
             fc_df = naive_forecast()
             all_forecasts.append(fc_df)
-
 
     if not all_forecasts:
         print("No forecasts were generated.")

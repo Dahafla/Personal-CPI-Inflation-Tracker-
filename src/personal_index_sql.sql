@@ -1,24 +1,53 @@
 -- Normalize CPI to base=100
 DROP VIEW IF EXISTS cpi_norm;
 CREATE VIEW cpi_norm AS
-WITH base AS (
-  SELECT c.month AS base_month, c.value AS base_val
+WITH base AS
+(
+  SELECT
+    category,
+    MIN(month) AS base_month
+    FROM cpi_series
+    GROUP BY category
+),
+
+base_val AS (
+  SELECT
+    c.category,
+    c.month AS base_month,
+    c.value AS base_val
   FROM cpi_series c
-  ORDER BY c.month
-  LIMIT 1
+  JOIN base b
+    ON c.category = b.category
+    AND c.month = b.base_month
 )
-SELECT c.month,
-       (c.value / base.base_val) * 100.0 AS cpi_index
-FROM cpi_series c, base;
+SELECT 
+  c.category,
+  strftime('%Y-%m', c.month) AS ym,
+  (c.value / bv.base_val) * 100.0 AS cpi_index
+FROM cpi_series c
+JOIN base_val bv
+  ON c.category = bv.category;
 
 -- Personal CPI per user
+-- Personal CPI per user based on their own monthly spend
+
 DROP VIEW IF EXISTS personal_index;
 CREATE VIEW personal_index AS
+WITH user_months AS (
+  SELECT DISTINCT
+    cc_num,
+    month AS ym
+  FROM monthly_weights
+)
 SELECT
-  b.cc_num,
-  n.month,
+  u.cc_num,
+  DATE(u.ym || '-01') AS month,
   ROUND(SUM(b.w0 * n.cpi_index), 2) AS personal_cpi
-FROM cpi_norm n
-JOIN base_weights b ON 1=1
-GROUP BY b.cc_num, n.month
-ORDER BY b.cc_num, n.month;
+FROM user_months u
+JOIN base_weights b
+  ON u.cc_num   = b.cc_num
+JOIN cpi_norm n
+  ON n.category = b.category
+ AND n.ym       = u.ym
+GROUP BY u.cc_num, month
+ORDER BY u.cc_num, month;

@@ -8,3 +8,4 @@ scikit-learn
 rapidfuzz
 matplotlib
 streamlit
+plotly
