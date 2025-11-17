@@ -1,3 +1,10 @@
+
+/*
+- transforms raw transactions data into a structure, CPI aligned format
+-Semantic layer that enables accurate aggregation and weight calculations
+*/
+
+
 DROP TABLE IF EXISTS transactions;
 CREATE TABLE transactions AS
 SELECT
@@ -33,3 +40,4 @@ amt AS spend
 
 FROM transactions_raw
 WHERE amt > 0;
+

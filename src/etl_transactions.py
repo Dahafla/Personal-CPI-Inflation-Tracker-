@@ -3,6 +3,14 @@ import pandas as pd
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
 
+'''
+ETL Script
+- Performs the ingestion and cleaning stage of the pipleline.
+- Reads raw multi-user credit card transactions from CSV, standardizes key fields
+- removes invalid rows and loads clean version into 'transactions_raw'
+- Creates a consistent, analysis - ready dataset to compute category weights and personalized CPI
+
+'''
 
 load_dotenv()
 
@@ -22,7 +30,7 @@ def load_and_store(csv_path: str):
 
     df[['date', 'cc_num', 'category', 'amt']].to_sql('transactions_raw', engine, if_exists='replace', index=False)
 
-    print("Loaded multi-user transactions_raw")
+    print("Loaded SQL table transactions_raw")
 
 if __name__ == "__main__":
     load_and_store("data/raw/credit_card_transactions.csv")

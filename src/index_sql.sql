@@ -1,3 +1,14 @@
+/*
+
+Set of SQL views compute personalized CPI weights
+- Uses fixed-weight Laspeyres approach
+- Aggregate by month, category and calculate category-level weights using SQL window function
+- Identify base month and extract base-period weights, forms fixed spending bucket
+
+*/
+
+
+-- Monthly Weights --
 DROP VIEW IF EXISTS monthly_weights;
 CREATE VIEW monthly_weights AS
 SELECT
@@ -12,7 +23,7 @@ CASE
       THEN 'Gas & Transport'
     WHEN category = 'Health & Fitness'
       THEN 'Health & Fitness'
-    ELSE 'Other'  -- Entertainment, Shopping, Home, Kids & Pets, Personal Care, Miscellaneous
+    ELSE 'Other'  
   END AS category,
 category,
 SUM(spend) AS spend,
@@ -22,14 +33,14 @@ SUM(spend)*1.0 / SUM(SUM(spend)) OVER (PARTITION BY cc_num, strftime('%Y-%m', da
 FROM transactions
 GROUP BY cc_num, month, category;
 
---Base month per user
+--Base month per user--
 DROP VIEW IF EXISTS base_month;
 CREATE VIEW base_month AS
 SELECT cc_num, MIN(month) AS month
 FROM monthly_weights
 GROUP BY cc_num;
 
---Base weights per user
+--Base weights per user--
 DROP VIEW IF EXISTS base_weights;
 CREATE VIEW base_weights AS
 SELECT mw.cc_num, mw.category, mw.weight AS w0

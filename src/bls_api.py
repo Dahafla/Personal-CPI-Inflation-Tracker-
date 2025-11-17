@@ -3,6 +3,12 @@ from sqlalchemy import create_engine
 from dotenv import load_dotenv
 
 
+'''
+- pulls official CPI time-series data from BLS API
+- standardizes dates, sorts the data and write a unified cpi_series
+- External data ingestion layer
+'''
+
 load_dotenv()
 DB_URL = os.getenv("DB_URL")
 engine = create_engine(DB_URL, connect_args={"timeout": 30})
@@ -39,7 +45,7 @@ def fetch_cpi(series_ids=SERIES, start=2018, end=2030):
     if "Results" not in data:
         print("BLS API did not return 'Results'. Full response:")
         print(data)
-        raise SystemExit("BLS API error - check API key or payload.")
+        raise SystemExit("BLS API error: check API key or payload.")
     
     rows=[]
 
@@ -57,12 +63,11 @@ def fetch_cpi(series_ids=SERIES, start=2018, end=2030):
                     })
                 
     df = pd.DataFrame(rows)
-    #df['month'] = pd.to_datetime(df['year'].astype(str)+'-'+df['m'].astype(str)+'-01')
     df["month"] = pd.to_datetime(df["month"])
     df = df.sort_values("month")
     
     df.to_sql('cpi_series', engine, if_exists='replace', index=False)
-    print("Stored CPI in SQLite: cpi_series")
+    print("Stored CPI in Table cpi_series")
 
 
 if __name__ == "__main__":

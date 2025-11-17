@@ -1,3 +1,11 @@
+/*
+- Normalizes official CPI data to a base of 100 using each categorys first available observation
+- Merge normalized CPI w. each user's fixed spending weights to compute personalized inflation index
+- Using Laspeyres style approach, eash users base month weights times by official category CPI changes
+producing user-specific inflatation path. 
+*/
+
+
 -- Normalize CPI to base=100
 DROP VIEW IF EXISTS cpi_norm;
 CREATE VIEW cpi_norm AS
@@ -28,7 +36,7 @@ FROM cpi_series c
 JOIN base_val bv
   ON c.category = bv.category;
 
--- Personal CPI per user
+
 -- Personal CPI per user based on their own monthly spend
 
 DROP VIEW IF EXISTS personal_index;

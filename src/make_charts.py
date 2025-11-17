@@ -5,6 +5,18 @@ import matplotlib.pyplot as plt
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
 
+
+'''
+- Connects to the SQL Database, selects a user and generates:
+    - Personal CPI vs Official CPI over time
+    - User's category spending weights over time
+    - A personal CPI forecast plot with confidence intervals
+
+- All plots saved as PNG under 'charts/'. 
+- Used to compare personalized inflation against headline CPI, understand shifts in spending behavior,
+& illustrate output of forcasting model
+
+'''
 # Load DB
 load_dotenv()
 engine = create_engine(os.getenv("DB_URL"))
@@ -109,6 +121,8 @@ def plot_forecast(cc_num, user_id):
     hist = hist[hist["month"] <= last_hist_date]
     fc = fc[fc["month"] > last_hist_date]
 
+
+
     plt.figure(figsize=(12, 6))
 
     # History
@@ -145,7 +159,7 @@ def generate_all_plots():
     cc_num = random.choice(list(mapping.keys()))
     user_id = mapping[cc_num]
 
-    print(f"Generating plots for user= {user_id}")
+    print(f"Generating plots for user = {user_id}")
     plot_personal_vs_cpiu(cc_num, user_id)
     plot_category_weights(cc_num, user_id)
     plot_forecast(cc_num, user_id)
