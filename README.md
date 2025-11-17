@@ -43,14 +43,14 @@ This behaves like a miniature quant research pipeline: data engineering → econ
 
 ---
 
-### 🔹 **5. SARIMAX Forecasting**
+### **5. SARIMAX Forecasting**
 - Fit SARIMAX(1,1,1)x(0,1,1,12) per user 
 - Fallback to naive forecasts for short histories  
 - Save 12-month forecasts with confidence bands
 
 ---
 
-### 🔹 **6. Interactive Streamlit Dashboard**
+### **6. Interactive Streamlit Dashboard**
 Includes:
 - Personal CPI vs official CPI-U  
 - Category weight evolution  
@@ -103,14 +103,15 @@ It mirrors how analysts build:
 
 # 🏗️ Technology Stack
 
-**Python:** pandas, SQLAlchemy, statsmodels (SARIMAX), Plotly, Streamlit
-**SQL:** SQLite, window functions, category mapping, weight calculations
-**APIs:** BLS CPI API
-**Visualization:** Matplotlib & Streamlit interactive dashboards
+### **Python:** pandas, SQLAlchemy, statsmodels (SARIMAX), Plotly, Streamlit
+### **SQL:** SQLite, window functions, category mapping, weight calculations
+### **APIs:** BLS CPI API
+### **Visualization:** Matplotlib & Streamlit interactive dashboards
 
 
 # 📁 **Project Architecture**
 
+```bash
 .
 ├── data/raw/                     # Raw transaction CSVs
 ├── src/
@@ -127,12 +128,14 @@ It mirrors how analysts build:
 ├── .env                          # DB_URL and (optional) BLS_API_KEY
 ├── requirements.txt
 └── README.md
+```
 
-Fetch official CPI from BLS API
 # ⚙️ **Setup Instructions**
 
-### **1. Clone the repository**
+
 ```bash
+1. Clone the repository
+
 git clone https://github.com/YOUR-USERNAME/Personal-CPI-Tracker.git
 cd Personal-CPI-Tracker
 
