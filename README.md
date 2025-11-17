@@ -3,7 +3,7 @@
 **Built with Python, SQL, BLS API, and Streamlit**
 
 This project computes a **Personalized Consumer Price Index (CPI)** for each user based on their unique spending behavior.
-Instead of relying on the national “CPI-U,” this system builds a user-specific inflation index using:
+Instead of relying on the national “CPI-U,” this system builds a user-specific inflation index **using:**
 
 - Cleaned transaction data
 - Fixed-weight category baskets (Laspeyres method)
@@ -11,7 +11,9 @@ Instead of relying on the national “CPI-U,” this system builds a user-specif
 - SARIMAX forecasting models
 - An interactive Streamlit dashboard
 
-This behaves like a miniature quant research pipeline: data engineering → economic modeling → time-series forecasting → visualization.
+This behaves like a miniature quant research pipeline: **data engineering → economic modeling → time-series forecasting → visualization.**
+
+--
 
 # ⭐ Features
 
@@ -59,7 +61,7 @@ Includes:
 - Random User Selector 
 - Preview of recent transactions
 
-
+---
 
 # 📊 Example Visualizations
 
@@ -83,6 +85,8 @@ Includes:
 
 ![Forecast](charts/forecast_976.png)
 
+---
+
 # 🧠 Why This Project Matters
 
 Official CPI uses fixed category weights (Shelter ~34%, Energy ~7%, Food ~13%). 
@@ -101,13 +105,26 @@ It mirrors how analysts build:
 - Real return calculations
 - Regional inflation models
 
+---
+
 # 🏗️ Technology Stack
 
-### **Python:** pandas, SQLAlchemy, statsmodels (SARIMAX), Plotly, Streamlit
-### **SQL:** SQLite, window functions, category mapping, weight calculations
-### **APIs:** BLS CPI API
-### **Visualization:** Matplotlib & Streamlit interactive dashboards
+- **Python:** pandas, SQLAlchemy, statsmodels (SARIMAX), Plotly, Streamlit
+- **SQL:** SQLite, window functions, category mapping, weight calculations
+- **APIs:** BLS CPI API
+- **Visualization:** Matplotlib & Streamlit interactive dashboards
 
+---
+
+# 📂 Data Source
+
+This project uses a public multi-user credit card transaction dataset from Kaggle:
+
+- **Dataset:** Credit Card Transactions Dataset 
+- **Source:** https://www.kaggle.com/datasets/priyamchoksi/credit-card-transactions-dataset
+- Provides detailed records of credit card transactions, including information about transaction times, amounts, and associated personal and merchant details
+
+---
 
 # 📁 **Project Architecture**
 
@@ -129,6 +146,8 @@ It mirrors how analysts build:
 ├── requirements.txt
 └── README.md
 ```
+
+---
 
 # ⚙️ **Setup Instructions**
 
