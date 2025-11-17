@@ -66,7 +66,7 @@ Includes:
 
 ## 1️⃣ Personal CPI vs Official CPI-U  
 
-*Shows whether your inflation moves differently than national CPI.&
+*Shows whether your inflation moves differently than national CPI-U*
 
 ![Personal vs CPI-U](charts/personal_vs_cpiu_976.png)
 
