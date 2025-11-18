@@ -1,4 +1,4 @@
-# 📈 Personal CPI Inflation Tracker  
+# Personal CPI Inflation Tracker  
 
 **Built with Python, SQL, BLS API, and Streamlit**
 
@@ -15,7 +15,7 @@ This behaves like a miniature quant research pipeline: **data engineering → ec
 
 --
 
-# ⭐ Features
+# Features
 
 ### **1. Transaction Ingestion & Cleaning**
 - Load multi-user transaction CSVs  
@@ -63,23 +63,23 @@ Includes:
 
 ---
 
-# 📊 Example Visualizations
+# Example Visualizations
 
 
-## 1️⃣ Personal CPI vs Official CPI-U  
+## 1. Personal CPI vs Official CPI-U  
 
 *Shows whether your inflation moves differently than national CPI-U*
 
 ![Personal vs CPI-U](charts/personal_vs_cpiu_976.png)
 
-## 2️⃣ Category Spending Weights Over Time  
+## 2. Category Spending Weights Over Time  
 
 *Highlights how grocery, gas, dining, shopping, and other categories shift over time.*
 
 ![Category Weights](charts/category_weights_976.png)
 
 
-## 3️⃣ Personal CPI Forecast with Confidence Intervals  
+## 3. Personal CPI Forecast with Confidence Intervals  
 
 *Predicts personal inflation for the next 6–12 months with confidence intervals.*
 
@@ -87,7 +87,7 @@ Includes:
 
 ---
 
-# 🧠 Why This Project Matters
+# Why This Project Matters
 
 Official CPI uses fixed category weights (Shelter ~34%, Energy ~7%, Food ~13%). 
 But your spending is different so your inflation is different.
@@ -107,7 +107,7 @@ It mirrors how analysts build:
 
 ---
 
-# 🏗️ Technology Stack
+# Technology Stack
 
 - **Python:** pandas, SQLAlchemy, statsmodels (SARIMAX), Plotly, Streamlit
 - **SQL:** SQLite, window functions, category mapping, weight calculations
@@ -116,7 +116,7 @@ It mirrors how analysts build:
 
 ---
 
-# 📂 Data Source
+# Data Source
 
 This project uses a public multi-user credit card transaction dataset from Kaggle:
 
@@ -126,7 +126,7 @@ This project uses a public multi-user credit card transaction dataset from Kaggl
 
 ---
 
-# 📁 **Project Architecture**
+# **Project Architecture**
 
 ```bash
 .
@@ -149,7 +149,7 @@ This project uses a public multi-user credit card transaction dataset from Kaggl
 
 ---
 
-# ⚙️ **Setup Instructions**
+# **Setup Instructions**
 
 
 ```bash
