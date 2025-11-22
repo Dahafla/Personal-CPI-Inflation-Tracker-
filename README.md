@@ -198,4 +198,4 @@ python src/forecast.py
 
 9. Run the dashboard
 
-streamlit run src/dashboard.py
+streamlit run src/app.py
